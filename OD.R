@@ -1,16 +1,17 @@
 # Load libraries
+library(ggplot2)
 
 # Read data
 untar("C:/Users/syzha/Desktop/New folder/OpenDoor/knn_data.tar.gz",list=TRUE) 
 data = untar("C:/Users/TKN005L/Desktop/DS/R Case/OD/knn_data.tar.gz")
 data = read.csv("data.csv")
-data$close_date = as.Date(data$close_date)
-attach(data)
-data = data[order(close_date),]
+data = data[order(data$close_date),]
 test = data[1:100,]
+test = test[order(test$close_date),]
 
-# KNN Implementation 1: calculate knn based on previous records
+# KNN Implementation 1: temporal prediction
 knn <- function(df, k){
+  df = df[order(df$close_date),]
   n <- nrow(df)
   if (n <= k) stop("k can not be more than n-1")
   neigh <- matrix(0, nrow = n, ncol = k)
@@ -25,46 +26,34 @@ knn <- function(df, k){
   return (predictions)
 }
 
-test <- transform(test, KNNPredictions = knn(test, 4))
+MRAE <- function(df){
+  MRAE <- median(abs(df$KNNPredictions - df$close_price)/df$close_price, na.rm = TRUE)
+  return(MRAE)
+}
 
-sum(with(df, Label != kNNPredictions))
+# Make the predictions
+data_knn1 <- transform(data, KNNPredictions = knn(data, 4))
+
+# Evaluate the overall performance
+MRAE(data_knn1)
+
+# Looking into the error trend by time
+data_knn1$RAE <- abs(data_knn1$KNNPredictions - data_knn1$close_price)/data_knn1$close_price
+data_knn1$close_date <= as.Date(data_knn1$close_date)
+ggplot(data = data_knn1, aes(x = close_date, y = RAE)) +
+  geom_line()
+
+# Looking into the error trend by spatial
+
+  
+# Select the optimal k by CV
+
+
+
+
+
 
 # KNN Implementation 2: predict test based on previous records
-
-
-
-
-###################################################################################################
-installation.probability <- function(user, package, user.package.matrix, distances, k = 25)
-{
-  neighbors <- k.nearest.neighbors(package, distances, k = k)
-  
-  return(mean(sapply(neighbors, function (neighbor) {user.package.matrix[user, neighbor]})))
-}
-
-installation.probability(1, 1, user.package.matrix, distances)
-#[1] 0.76
-
-# Fourteenth code snippet
-most.probable.packages <- function(user, user.package.matrix, distances, k = 25)
-{
-  return(order(sapply(1:ncol(user.package.matrix),
-                      function (package)
-                      {
-                        installation.probability(user,
-                                                 package,
-                                                 user.package.matrix,
-                                                 distances,
-                                                 k = k)
-                      }),
-               decreasing = TRUE))
-}
-
-user <- 1
-
-listing <- most.probable.packages(user, user.package.matrix, distances)
-
-colnames(user.package.matrix)[listing[1:10]]
 
 
 
