@@ -1,5 +1,6 @@
 # Load libraries
 library(ggplot2)
+library(hexbin)
 
 # Read data
 untar("C:/Users/syzha/Desktop/New folder/OpenDoor/knn_data.tar.gz",list=TRUE) 
@@ -44,7 +45,8 @@ ggplot(data = data_knn1, aes(x = close_date, y = RAE)) +
   geom_line()
 
 # Looking into the error trend by spatial
-
+ggplot(data = data_knn1, aes(latitude, longitude)) +
+  stat_summary_hex(fun = function(x) median(x))
   
 # Select the optimal k by CV
 
