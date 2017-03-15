@@ -15,7 +15,7 @@ Please see codes for details of the implementations.
 
 ### Qestions:
 1. What is the performance measured in MRAE?
-The overall performance for all records is about 0.20. I took a test set of the last 10000 records and the MRAE is about.
+__The overall performance for all records is about 0.20. I took a test set of the last 10000 records and the MRAE is about.
 
 2. What would be an appropriate methodology to dertermine the optimal K?
 One way is to plot the error rate by K based on cross validation results. Then select the turning point. In my case, due the above reason I just used one test dataset for now.
