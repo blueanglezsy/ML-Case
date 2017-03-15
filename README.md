@@ -21,7 +21,7 @@ The overall performance for all records is about 0.20. I took a test set of the 
 One way is to plot the error rate by K based on cross validation results. Then select the turning point. In my case, due the above reason I just used one test dataset for now.
 
 3. Spatial or temporal trends in error?
-
+![Spatial vs Error](https://github.com/blueanglezsy/ML-Case/blob/master/spatial.png)
 
 4. How to improve this model?
 One thing to be considered is to add more variables into the model. For example, one thing i noticed is that there are negative price in the dataset, which might be sell/buy, partition by this will be very helpful since in our case, if take similar location neighbors and they got negative values, it will heavily affect the prediction.
