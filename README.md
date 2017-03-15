@@ -14,7 +14,7 @@ pi_hat = sum(wjpj) where j is the 4 nearest neighbors of i. I have belows settin
 Please see codes for details of the implementations.
 
 ### Qestions:
-1. What is the performance measured in MRAE?__
+1. What is the performance measured in MRAE?  
 The overall performance for all records is about 0.20. I took a test set of the last 10000 records and the MRAE is about.
 
 2. What would be an appropriate methodology to dertermine the optimal K?
