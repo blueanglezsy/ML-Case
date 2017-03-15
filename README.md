@@ -18,7 +18,8 @@ Please see codes for details of the implementations.
 The overall performance for all records is about 0.20. I took a test set of the last 18000 records and the MRAE is about 0.22.
 
 2. What would be an appropriate methodology to dertermine the optimal K?  
-One way is to plot the error rate by K based on cross validation results. Then select the turning point. In my case, due the above reason I just used one test dataset for now.
+One way is to plot the error rate by K based on cross validation results. Then select the turning point. In my case, due the above reason I just used one test dataset for now.  
+![Spatial vs Error](https://github.com/blueanglezsy/ML-Case/blob/master/bestk.png)  
 
 3. Spatial or temporal trends in error?  
 ![Spatial vs Error](https://github.com/blueanglezsy/ML-Case/blob/master/spatial.png)  
