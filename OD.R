@@ -68,6 +68,7 @@ knn <- function(df_train, df_test, k){
   }
   return (predictions)
 }
+# cbind(neigh, t(dsq), t(df_train$close_price[neigh[i, ]]), predictions)
 
 MRAE <- function(df){
   MRAE <- median(abs(df$KNNPredictions - df$close_price)/df$close_price, na.rm = TRUE)
@@ -95,11 +96,18 @@ ggplot(data = data_knn2, aes(latitude, longitude, z = RAE)) +
 # Optimize K
 best_k = rep(NA, 10)
 for (k in 1:10){
-  pred <- transform(test, KNNPredictions = knn(train, test, 4))
+  pred <- transform(test, KNNPredictions = knn(train, test, k))
   best_k[k] = MRAE(pred)
 }
 
-
+length(data$close_price[data$close_price < 0])
+above_z = subset(data, close_price > 0)
+above_z = above_z[order(above_z$close_date),]
+l = nrow(above_z)
+train = above_z[1:75000,]
+test = above_z[75001:l,]
+data_knn3 <- transform(test, KNNPredictions = knn(above_z, 4))
+  
 
 # KNN Implementation for random sampling setting? 
 # (I don't think in our case we should use this one cause our data come into in a temporal manner)
@@ -111,11 +119,6 @@ for (k in 1:10){
     # cross validation get the error rate plotted by k 
   }
 }
-
-
-
-
-
 
 
 
